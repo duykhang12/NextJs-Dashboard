@@ -12,4 +12,4 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 
 
-export const experimental_ppr = true;
+// export const experimental_ppr = true;
