@@ -65,19 +65,19 @@ export default async function CustomersTable({
               <table className="hidden min-w-full rounded-md text-gray-900 md:table">
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
-                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6 border border-gray-300">
                       Name
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
                       Email
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
                       Total Invoices
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium">
+                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
                       Total Pending
                     </th>
-                    <th scope="col" className="px-4 py-5 font-medium">
+                    <th scope="col" className="px-4 py-5 font-medium border border-gray-300">
                       Total Paid
                     </th>
                   </tr>
@@ -86,7 +86,7 @@ export default async function CustomersTable({
                 <tbody className="divide-y divide-gray-200 text-gray-900">
                   {customers.map((customer) => (
                     <tr key={customer.id} className="group">
-                      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6">
+                      <td className="whitespace-nowrap bg-white py-5 pl-4 pr-3 text-sm text-black group-first-of-type:rounded-md group-last-of-type:rounded-md sm:pl-6 border border-gray-300">
                         <div className="flex items-center gap-3">
                           <Image
                             src={customer.image_url}
@@ -98,16 +98,16 @@ export default async function CustomersTable({
                           <p>{customer.name}</p>
                         </div>
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm border border-gray-300">
                         {customer.email}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm border border-gray-300">
                         {customer.total_invoices}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm border border-gray-300">
                         {customer.total_pending}
                       </td>
-                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md">
+                      <td className="whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md border border-gray-300">
                         {customer.total_paid}
                       </td>
                     </tr>
