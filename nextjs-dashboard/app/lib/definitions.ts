@@ -26,6 +26,15 @@ export type Invoice = {
   status: 'pending' | 'paid';
 };
 
+export type Product = {
+  id: string;
+  name: string;
+  image_url: string;
+  price: number;
+  date: string;
+  status: 'active' | 'inactive';
+};
+
 export type Revenue = {
   month: string;
   revenue: number;
@@ -65,6 +74,16 @@ export type CustomersTableType = {
   total_paid: number;
 };
 
+export type ProductTable = {
+  id: string;
+  name: string;
+  image_url: string;
+  price: number;
+  stock: number;
+  date: string;
+  status: 'active' | 'inactive';
+};
+
 export type FormattedCustomersTable = {
   id: string;
   name: string;
@@ -85,4 +104,13 @@ export type InvoiceForm = {
   customer_id: string;
   amount: number;
   status: 'pending' | 'paid';
+};
+
+export type ProductForm = {
+  id: string;
+  name: string;
+  image_url: string;
+  price: number;
+  stocj: number;
+  status: 'active' | 'inactive';
 };

@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <main className="flex p-6 items-center">
       {/* <div className={styles.shape}> */}
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
+      <div className="flex h-20 shrink-0 items-end rounded-lg bg-yellow-500 p-4 md:h-52">
         <Logo />
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">

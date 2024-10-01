@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Login',
 };
 
+// username: user@nextmail.com                      
+// password: 123456
+
 export default function LoginPage() {
   return (
     <main className="flex items-center justify-center md:h-screen">
@@ -15,8 +18,8 @@ export default function LoginPage() {
             <Logo />
           </div>
         </div>
-        <LoginForm />
-      </div>
+        <LoginForm />             
+      </div>                        
     </main>
   );
 }
