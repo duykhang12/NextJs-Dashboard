@@ -279,7 +279,6 @@ export async function fetchProductById(id: string) {
         products.image_url,
         products.price,
         products.stock,
-        products.date,
         products.status,
       FROM products
       WHERE products.id = ${id};
@@ -290,7 +289,7 @@ export async function fetchProductById(id: string) {
       // Convert amount from cents to dollars
       price: product.price / 100,
     }));
-    console.log(product); // Invoice is an empty array []
+    console.log(product);
     return product[0];
   } catch (error) {
     console.error("Database Error:", error);

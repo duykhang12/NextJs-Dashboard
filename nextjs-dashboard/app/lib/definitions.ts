@@ -111,6 +111,6 @@ export type ProductForm = {
   name: string;
   image_url: string;
   price: number;
-  stocj: number;
+  stock: number;
   status: 'active' | 'inactive';
 };

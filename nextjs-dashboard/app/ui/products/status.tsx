@@ -1,4 +1,8 @@
 import clsx from 'clsx';
+import {
+  CheckCircleIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
 
 export default function ProductStatus({ status }: { status: string }) {
   return (
@@ -13,12 +17,12 @@ export default function ProductStatus({ status }: { status: string }) {
     >
       {status === 'inactive' ? (
         <>
-          Inactive
+           Inactive <XCircleIcon className="h-4 w-4 ml-1" />
         </>
       ) : null}
       {status === 'active' ? (
         <>
-          Active
+          Active <CheckCircleIcon className="h-4 w-4 ml-1" />
         </>
       ) : null}
     </span>

@@ -28,7 +28,7 @@ export default async function ProductsTable({
                     <div className="mb-2 flex items-center">
                       <Image
                         src={product.image_url}
-                        className="mr-2 rounded-full"
+                        className="mr-2"
                         width={28}
                         height={28}
                         alt={`${product.name}'s profile picture`}
@@ -73,7 +73,7 @@ export default async function ProductsTable({
                   Status
                 </th>
                 <th scope="col" className="py-3 pl-6 pr-3 border border-gray-300">
-                  Edit
+                  Action
                 </th>
               </tr>
             </thead>
@@ -87,8 +87,7 @@ export default async function ProductsTable({
                     <div className="flex items-center gap-10">
                       <Image
                         src={product.image_url}
-                        className="rounded-full"
-                        width={90}
+                        width={80}
                         height={50}
                         alt={`${product.name}'s profile picture`}
                       />

@@ -4,27 +4,65 @@ import { z } from "zod";
 import { sql } from "@vercel/postgres";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
+import fs from "fs";
+import path from "path";
 
 const FormSchema = z.object({
   id: z.string(),
   customerId: z.string({
     invalid_type_error: "Please select a customer.",
   }),
+  name: z.string().min(1, { message: "Please enter a name." }),
+  image_url: z.instanceof(File).refine((file) => file.size > 0, {
+    message: "Please upload a file.",
+  }),
   amount: z.coerce
     .number()
     .gt(0, { message: "Please enter an amount greater than $0." }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status.",
+  price: z.coerce
+    .number()
+    .gt(0, { message: "Please enter an amount greater than $0." }),
+  stock: z.coerce
+    .number()
+    .gt(0, { message: "Please enter an amount greater than 0." }),
+  status: z.enum(["pending", "paid", "active", "inactive"], {
+    invalid_type_error: "Please select a status.",
   }),
   date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateInvoice = FormSchema.omit({
+  id: true,
+  date: true,
+  name: true,
+  image_url: true,
+  price: true,
+  stock: true,
+});
+const UpdateInvoice = FormSchema.omit({
+  id: true,
+  date: true,
+  name: true,
+  image_url: true,
+  price: true,
+  stock: true,
+});
+const CreateProduct = FormSchema.omit({
+  id: true,
+  customerId: true,
+  amount: true,
+  date: true,
+});
+const UpdateProduct = FormSchema.omit({
+  id: true,
+  customerId: true,
+  amount: true,
+  date: true,
+});
 
-export type State = {
+export type InvoiceState = {
   errors?: {
     customerId?: string[];
     amount?: string[];
@@ -32,8 +70,21 @@ export type State = {
   };
   message?: string | null;
 };
+export type ProductState = {
+  errors?: {
+    name?: string[];
+    image_url?: string[];
+    price?: string[];
+    stock?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+};
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(
+  prevState: InvoiceState,
+  formData: FormData
+) {
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get("customerId"),
     amount: formData.get("amount"),
@@ -69,7 +120,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
 export async function updateInvoice(
   id: string,
-  prevState: State,
+  prevState: InvoiceState,
   formData: FormData
 ) {
   const validatedFields = UpdateInvoice.safeParse({
@@ -81,7 +132,7 @@ export async function updateInvoice(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: "Missing Fields. Failed to Update Invoice.",
     };
   }
 
@@ -113,6 +164,107 @@ export async function deleteInvoice(id: string) {
   }
 }
 
+export async function createProduct(
+  prevState: ProductState,
+  formData: FormData
+) {
+  const validatedFields = CreateProduct.safeParse({
+    name: formData.get("name"),
+    image_url: formData.get("productImage"),
+    price: formData.get("price"),
+    stock: formData.get("stock"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Invoice.",
+    };
+  }
+  const { name, image_url, price, stock, status } = validatedFields.data;
+  const priceInCents = price * 100;
+  const date = new Date().toISOString().split("T")[0];
+
+  // Handle the image file
+  let imagePath = null;
+
+  if (image_url) {
+    // Create a unique filename
+    const uniqueFileName = `${name.replace(/\s+/g, "")}.png`;
+
+    // Define the upload directory
+    const uploadDirectory = path.join(process.cwd(), "public/products");
+
+    // Ensure the directory exists
+    if (!fs.existsSync(uploadDirectory)) {
+      fs.mkdirSync(uploadDirectory, { recursive: true });
+    }
+
+    // Define the full image path
+    const fullImagePath = path.join(uploadDirectory, uniqueFileName);
+
+    // Write the file to the disk
+    const fileBuffer = Buffer.from(await image_url.arrayBuffer());
+    fs.writeFileSync(fullImagePath, fileBuffer);
+
+    // Save the image path
+    imagePath = `/products/${uniqueFileName}`;
+  }
+
+  try {
+    await sql`
+    INSERT INTO products (name, image_url, price, stock, date, status)
+    VALUES (${name}, ${imagePath}, ${priceInCents}, ${stock}, ${date}, ${status} )
+`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Product.",
+    };
+  }
+
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
+  // Test it out:
+  //   console.log(rawFormData);
+}
+
+export async function updateProduct(
+  id: string,
+  prevState: ProductState,
+  formData: FormData
+) {
+  const validatedFields = UpdateProduct.safeParse({
+    name: formData.get("name"),
+    price: formData.get("price"),
+    stock: formData.get("stock"),
+    status: formData.get("status"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Update Product.",
+    };
+  }
+
+  const { name, price, stock, status } = validatedFields.data;
+  const priceInCents = price * 100;
+
+  try {
+    await sql`
+        UPDATE products
+        SET name = ${name}, price = ${priceInCents}, stock = ${stock} status = ${status}
+        WHERE id = ${id}
+      `;
+  } catch (error) {
+    return { message: "Database Error: Failed to Update Product." };
+  }
+
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
+}
+
 export async function deleteProduct(id: string) {
   // throw new Error('Failed to Delete Invoice');
   try {
@@ -126,17 +278,17 @@ export async function deleteProduct(id: string) {
 
 export async function authenticate(
   prevState: string | undefined,
-  formData: FormData,
+  formData: FormData
 ) {
   try {
-    await signIn('credentials', formData);
+    await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
+        case "CredentialsSignin":
+          return "Invalid credentials.";
         default:
-          return 'Something went wrong.';
+          return "Something went wrong.";
       }
     }
     throw error;
