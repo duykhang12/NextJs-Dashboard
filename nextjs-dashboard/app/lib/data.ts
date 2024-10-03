@@ -243,7 +243,6 @@ export async function fetchFilteredProducts(
       ORDER BY products.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
-
     return products.rows;
   } catch (error) {
     console.error("Database Error:", error);

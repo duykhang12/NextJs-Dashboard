@@ -184,14 +184,14 @@ export async function createProduct(
   }
   const { name, image_url, price, stock, status } = validatedFields.data;
   const priceInCents = price * 100;
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date().toISOString();
 
   // Handle the image file
   let imagePath = null;
 
   if (image_url) {
     // Create a unique filename
-    const uniqueFileName = `${name.replace(/\s+/g, "")}.png`;
+    const uniqueFileName = `${name.replace(/\s+/g, "").toLowerCase()}.png`;
 
     // Define the upload directory
     const uploadDirectory = path.join(process.cwd(), "public/products");
@@ -225,8 +225,6 @@ export async function createProduct(
 
   revalidatePath("/dashboard/products");
   redirect("/dashboard/products");
-  // Test it out:
-  //   console.log(rawFormData);
 }
 
 export async function updateProduct(

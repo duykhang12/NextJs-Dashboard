@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import { UpdateProduct, DeleteProduct } from '@/app/ui/products/button';
-import ProductStatus from '@/app/ui/products/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredProducts } from '@/app/lib/data';
+import Image from "next/image";
+import { UpdateProduct, DeleteProduct } from "@/app/ui/products/button";
+import ProductStatus from "@/app/ui/products/status";
+import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
+import { fetchFilteredProducts } from "@/app/lib/data";
 
 export default async function ProductsTable({
   query,
@@ -29,8 +29,8 @@ export default async function ProductsTable({
                       <Image
                         src={product.image_url}
                         className="mr-2"
-                        width={28}
-                        height={28}
+                        width={50}
+                        height={50}
                         alt={`${product.name}'s profile picture`}
                       />
                       <p>{product.name}</p>
@@ -57,7 +57,10 @@ export default async function ProductsTable({
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-lg font-bold">
               <tr>
-                <th scope="col" className="px-4 py-5 sm:pl-6 border border-gray-300">
+                <th
+                  scope="col"
+                  className="px-4 py-5 sm:pl-6 border border-gray-300"
+                >
                   Product Name
                 </th>
                 <th scope="col" className="px-3 py-5 border border-gray-300">
@@ -72,7 +75,10 @@ export default async function ProductsTable({
                 <th scope="col" className="px-3 py-5 border border-gray-300">
                   Status
                 </th>
-                <th scope="col" className="py-3 pl-6 pr-3 border border-gray-300">
+                <th
+                  scope="col"
+                  className="py-3 pl-6 pr-3 border border-gray-300"
+                >
                   Action
                 </th>
               </tr>
@@ -87,7 +93,7 @@ export default async function ProductsTable({
                     <div className="flex items-center gap-10">
                       <Image
                         src={product.image_url}
-                        width={80}
+                        width={50}
                         height={50}
                         alt={`${product.name}'s profile picture`}
                       />

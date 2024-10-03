@@ -1,5 +1,5 @@
 import Form from "@/app/ui/products/create-form";
-import Breadcrumbs from "@/app/ui/products/breadcrumbs";
+import Breadcrumbs from "@/app/ui/breadcrumbs";
 // import { fetchCustomers } from "@/app/lib/data";
 import { Metadata } from "next";
 
@@ -22,7 +22,6 @@ export default async function Page() {
           },
         ]}
       />
-      {/* <Form customers={customers} /> */}
       <Form />
     </main>
   );
