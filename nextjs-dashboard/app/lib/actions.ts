@@ -14,8 +14,7 @@ const FormSchema = z.object({
   customerId: z.string({
     invalid_type_error: "Please select a customer.",
   }),
-  name: z.string()
-    .min(1, { message: "Please enter a name." }),
+  name: z.string().min(1, { message: "Please enter a name." }),
   image_url: z.instanceof(File).refine((file) => file.size > 0, {
     message: "Please upload a file.",
   }),
@@ -59,7 +58,7 @@ const CreateProduct = FormSchema.omit({
 const UpdateProduct = FormSchema.omit({
   id: true,
   customerId: true,
-  image_url:true,
+  image_url: true,
   amount: true,
   date: true,
 });
