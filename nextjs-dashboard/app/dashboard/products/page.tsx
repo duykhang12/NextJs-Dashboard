@@ -3,7 +3,7 @@ import Search from "@/app/ui/search";
 import ProductsTable from "@/app/ui/products/table";
 import { CreateProduct } from "@/app/ui/products/button";
 import { lusitana } from "@/app/ui/fonts";
-import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { TableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchProductsPages } from '@/app/lib/data';
 import { Metadata } from 'next';
@@ -34,7 +34,7 @@ export default async function Page({
         <Search placeholder="Search products..." />
         <CreateProduct />
       </div>
-       <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+       <Suspense key={query + currentPage} fallback={<TableSkeleton />}>
         <ProductsTable query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
