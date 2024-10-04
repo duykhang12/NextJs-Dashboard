@@ -1,10 +1,7 @@
-import Image from 'next/image';
-import { lusitana } from '@/app/ui/fonts';
-import Search from '@/app/ui/search';
-import {
-  CustomersTableType,
-  FormattedCustomersTable,
-} from '@/app/lib/definitions';
+import Image from "next/image";
+import { lusitana } from "@/app/ui/fonts";
+import Search from "@/app/ui/search";
+import { FormattedCustomersTable } from "@/app/lib/definitions";
 
 export default async function CustomersTable({
   customers,
@@ -65,19 +62,34 @@ export default async function CustomersTable({
               <table className="hidden min-w-full rounded-md text-gray-900 md:table">
                 <thead className="rounded-md bg-gray-50 text-left text-sm font-normal">
                   <tr>
-                    <th scope="col" className="px-4 py-5 font-medium sm:pl-6 border border-gray-300">
+                    <th
+                      scope="col"
+                      className="px-4 py-5 font-medium sm:pl-6 border border-gray-300"
+                    >
                       Name
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
+                    <th
+                      scope="col"
+                      className="px-3 py-5 font-medium border border-gray-300"
+                    >
                       Email
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
+                    <th
+                      scope="col"
+                      className="px-3 py-5 font-medium border border-gray-300"
+                    >
                       Total Invoices
                     </th>
-                    <th scope="col" className="px-3 py-5 font-medium border border-gray-300">
+                    <th
+                      scope="col"
+                      className="px-3 py-5 font-medium border border-gray-300"
+                    >
                       Total Pending
                     </th>
-                    <th scope="col" className="px-4 py-5 font-medium border border-gray-300">
+                    <th
+                      scope="col"
+                      className="px-4 py-5 font-medium border border-gray-300"
+                    >
                       Total Paid
                     </th>
                   </tr>
