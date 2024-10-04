@@ -109,7 +109,6 @@ export type InvoiceForm = {
 export type ProductForm = {
   id: string;
   name: string;
-  image_url: string;
   price: number;
   stock: number;
   status: 'active' | 'inactive';

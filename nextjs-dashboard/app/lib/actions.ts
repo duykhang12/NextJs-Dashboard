@@ -14,7 +14,8 @@ const FormSchema = z.object({
   customerId: z.string({
     invalid_type_error: "Please select a customer.",
   }),
-  name: z.string().min(1, { message: "Please enter a name." }),
+  name: z.string()
+    .min(1, { message: "Please enter a name." }),
   image_url: z.instanceof(File).refine((file) => file.size > 0, {
     message: "Please upload a file.",
   }),
@@ -58,6 +59,7 @@ const CreateProduct = FormSchema.omit({
 const UpdateProduct = FormSchema.omit({
   id: true,
   customerId: true,
+  image_url:true,
   amount: true,
   date: true,
 });
@@ -74,6 +76,15 @@ export type ProductState = {
   errors?: {
     name?: string[];
     image_url?: string[];
+    price?: string[];
+    stock?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+};
+export type ProductFormState = {
+  errors?: {
+    name?: string[];
     price?: string[];
     stock?: string[];
     status?: string[];
@@ -229,7 +240,7 @@ export async function createProduct(
 
 export async function updateProduct(
   id: string,
-  prevState: ProductState,
+  prevState: ProductFormState,
   formData: FormData
 ) {
   const validatedFields = UpdateProduct.safeParse({
@@ -252,7 +263,7 @@ export async function updateProduct(
   try {
     await sql`
         UPDATE products
-        SET name = ${name}, price = ${priceInCents}, stock = ${stock} status = ${status}
+        SET name = ${name}, price = ${priceInCents}, stock = ${stock}, status = ${status}
         WHERE id = ${id}
       `;
   } catch (error) {

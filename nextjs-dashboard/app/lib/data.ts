@@ -275,10 +275,9 @@ export async function fetchProductById(id: string) {
       SELECT
         products.id,
         products.name,
-        products.image_url,
         products.price,
         products.stock,
-        products.status,
+        products.status
       FROM products
       WHERE products.id = ${id};
     `;
