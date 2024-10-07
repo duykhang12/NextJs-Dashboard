@@ -29,10 +29,11 @@ export type Invoice = {
 export type Product = {
   id: string;
   name: string;
-  image_url: string;
   price: number;
+  stock: number;
   date: string;
   status: 'active' | 'inactive';
+  image_data: string;
 };
 
 export type Revenue = {
@@ -77,11 +78,11 @@ export type CustomersTableType = {
 export type ProductTable = {
   id: string;
   name: string;
-  image_url: string;
   price: number;
   stock: number;
   date: string;
   status: 'active' | 'inactive';
+  image_data: string;
 };
 
 export type FormattedCustomersTable = {

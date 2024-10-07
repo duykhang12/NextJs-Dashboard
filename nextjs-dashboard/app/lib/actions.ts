@@ -197,36 +197,14 @@ export async function createProduct(
   const date = new Date().toISOString();
 
   // Handle the image file
-  let imagePath = null;
+  const imageBuffer = Buffer.from(await image_url.arrayBuffer());
+  const fileBase64 = imageBuffer.toString('base64');
 
-  if (image_url) {
-    // Create a unique filename
-    const uniqueFileName = `${name.replace(/\s+/g, "").toLowerCase()}.png`;
-
-    // Define the upload directory
-    const uploadDirectory = path.join(process.cwd(), "public/products");
-
-    // Ensure the directory exists
-    if (!fs.existsSync(uploadDirectory)) {
-      fs.mkdirSync(uploadDirectory, { recursive: true });
-    }
-
-    // Define the full image path
-    const fullImagePath = path.join(uploadDirectory, uniqueFileName);
-
-    // Write the file to the disk
-    const fileBuffer = Buffer.from(await image_url.arrayBuffer());
-    fs.writeFileSync(fullImagePath, fileBuffer);
-
-    // Save the image path
-    imagePath = `/products/${uniqueFileName}`;
-  }
 
   try {
     await sql`
-    INSERT INTO products (name, image_url, price, stock, date, status)
-    VALUES (${name}, ${imagePath}, ${priceInCents}, ${stock}, ${date}, ${status} )
-`;
+    INSERT INTO products (name, price, stock, date, status, image_data)
+    VALUES (${name}, ${priceInCents}, ${stock}, ${date}, ${status}, ${fileBase64} )`;
   } catch (error) {
     return {
       message: "Database Error: Failed to Create Product.",

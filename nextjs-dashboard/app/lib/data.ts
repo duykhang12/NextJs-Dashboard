@@ -229,11 +229,11 @@ export async function fetchFilteredProducts(
       SELECT
         products.id,
         products.name,
-        products.image_url,
         products.price,
         products.stock,
         products.date,
-        products.status     
+        products.status,
+        products.image_data     
       FROM products
       WHERE
         products.name ILIKE ${`%${query}%`} OR

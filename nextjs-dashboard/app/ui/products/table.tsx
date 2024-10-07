@@ -27,7 +27,7 @@ export default async function ProductsTable({
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src={product.image_url}
+                        src={`data:image/png;base64,${product.image_data}`}
                         className="mr-2"
                         width={50}
                         height={50}
@@ -92,7 +92,7 @@ export default async function ProductsTable({
                   <td className="whitespace-nowrap py-3 pl-9 pr-1 border border-gray-300">
                     <div className="flex items-center gap-10">
                       <Image
-                        src={product.image_url}
+                        src={`data:image/png;base64,${product.image_data}`}
                         width={50}
                         height={50}
                         alt={`${product.name}'s profile picture`}

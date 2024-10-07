@@ -3,6 +3,9 @@
 const nextConfig = {
   experimental: {
     ppr: "incremental",
+    serverActions: {
+      bodySizeLimit: '5mb', // Set your desired limit, e.g., 5mb
+    },
   },
 };
 
