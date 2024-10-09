@@ -29,7 +29,7 @@ export default async function ProductsTable({
                       <Image
                         src={`data:image/png;base64,${product.image_data}`}
                         className="mr-2"
-                        width={50}
+                        width={70}
                         height={50}
                         alt={`${product.name}'s profile picture`}
                       />
@@ -93,7 +93,7 @@ export default async function ProductsTable({
                     <div className="flex items-center gap-10">
                       <Image
                         src={`data:image/png;base64,${product.image_data}`}
-                        width={50}
+                        width={70}
                         height={50}
                         alt={`${product.name}'s profile picture`}
                       />
