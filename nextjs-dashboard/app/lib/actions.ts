@@ -6,8 +6,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
-import fs from "fs";
-import path from "path";
 
 const FormSchema = z.object({
   id: z.string(),
