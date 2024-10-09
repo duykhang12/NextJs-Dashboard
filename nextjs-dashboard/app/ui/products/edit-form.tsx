@@ -160,7 +160,7 @@ export default function EditProductForm({ product }: { product: ProductForm }) {
         </fieldset>
 
         {/* Product Image */}
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label
             htmlFor="productImage"
             className="mb-2 block text-sm font-medium"
@@ -178,7 +178,7 @@ export default function EditProductForm({ product }: { product: ProductForm }) {
               />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
