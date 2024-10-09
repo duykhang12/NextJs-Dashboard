@@ -227,6 +227,23 @@ export async function updateProduct(
     status: formData.get("status"),
   });
 
+  const image_url = formData.get("productImage");
+
+  if (image_url && image_url.size > 0) {
+    const imageBuffer = Buffer.from(await image_url.arrayBuffer());
+    const fileBase64 = imageBuffer.toString('base64');
+
+    try {
+      await sql`
+          UPDATE products
+          SET image_data = ${fileBase64}
+          WHERE id = ${id}
+        `;
+    } catch (error) {
+      return { message: "Database Error: Failed to Update Product." };
+    }
+  }
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
