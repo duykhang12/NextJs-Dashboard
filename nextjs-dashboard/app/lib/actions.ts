@@ -229,7 +229,7 @@ export async function updateProduct(
 
   const image_url = formData.get("productImage");
 
-  if (image_url && image_url.size > 0) {
+  if (image_url instanceof File && image_url.size > 0) {
     const imageBuffer = Buffer.from(await image_url.arrayBuffer());
     const fileBase64 = imageBuffer.toString('base64');
 
