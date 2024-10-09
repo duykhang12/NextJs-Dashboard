@@ -165,7 +165,7 @@ export default function EditProductForm({ product }: { product: ProductForm }) {
             htmlFor="productImage"
             className="mb-2 block text-sm font-medium"
           >
-            Upload a product image
+            Change product avatar
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
