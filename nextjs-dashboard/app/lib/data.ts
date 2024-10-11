@@ -5,6 +5,7 @@ import {
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
+  LatestProduct,
   Revenue,
   ProductTable,
   ProductForm,
@@ -44,6 +45,21 @@ export async function fetchLatestInvoices() {
       amount: formatCurrency(invoice.amount),
     }));
     return latestInvoices;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch the latest invoices.");
+  }
+}
+
+export async function fetchLatestProducts() {
+  try {
+    const data = await sql<LatestProduct>`
+      SELECT products.id, products.name, products.price, products.stock, products.image_data
+      FROM products
+      ORDER BY products.date DESC
+      LIMIT 5`;
+
+    return data.rows;
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to fetch the latest invoices.");
